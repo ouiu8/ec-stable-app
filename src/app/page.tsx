@@ -1,103 +1,98 @@
-import Image from "next/image";
+/* 
+[概要]
+このファイル (page.tsx) は ECサイトのトップページを定義。
+仮データ (mockProducts) を使って商品一覧を表示し、Tailwind CSS でカード風のレイアウトを作る。
 
+[技術スタック]
+- 【React】(JSX): UIコンポーネントを作成
+- 【TypeScript】: 型安全性を向上
+- 【Tailwind CSS】: ユーティリティクラスを使ってデザイン
+*/
+
+/* 
+[モックデータ - 仮の商品情報]
+本来はAPIやデータベースから取得するところを、まずは手動で配列を定義してテスト。
+*/
+const mockProducts = [
+  {
+    id: 1, // 商品ID（数値）
+    name: '商品A', // 商品名（文字列）
+    price: 1000, // 価格（数値）
+    imageUrl: '/images/product-a.jpg', // 商品画像のパス（public/images/内）
+  },
+  {
+    id: 2,
+    name: '商品B',
+    price: 2000,
+    imageUrl: '/images/product-b.jpg',
+  },
+  {
+    id: 3,
+    name: '商品C',
+    price: 3000,
+    imageUrl: '/images/product-c.jpg',
+  },
+];
+
+/* 
+[コンポーネント定義]
+Next.js 13 の App Router では、page.tsx のデフォルトエクスポートが "/" (ルート) に対応。
+*/
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    /* 
+      [グリッドレイアウト用のラッパーdiv]
+      p-4           : 全方向に1rem(16px)の余白
+      grid          : display: grid を適用
+      grid-cols-1   : 1列のグリッド (狭い画面用)
+      md:grid-cols-3: 768px以上の画面幅では3列に
+      gap-4         : グリッドアイテム間の隙間を1remに
+    */
+    <div className="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+      {/*
+        [商品カードのループ表示]
+        mockProducts.map(...) : 配列内の各商品をカードにして表示
+        key={product.id}      : React が要素を一意に識別するために必須
+      */}
+      {mockProducts.map((product) => (
+        /* 
+          [カードコンテナ]
+          border : 枠線を表示
+          rounded: 角を丸くする
+          shadow : 影を付ける
+          p-4    : パディング(16px)
+          bg-white : 背景を白に
+        */
+        <div key={product.id} className="border rounded shadow p-4 bg-white">
+          {/*
+            [商品画像]
+            w-full       : 幅を100%に
+            h-40         : 高さを10rem(160px)に固定
+            object-cover : 画像の縦横比を維持しつつ要素を埋める
+            mb-2         : 下方向に8pxの余白
+          */}
+          <img
+            src={product.imageUrl}
+            alt={product.name}
+            className="w-full h-auto object-auto mb-2"
+          />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          {/*
+            [商品名]
+            text-xl   : 文字サイズをXL (約1.25rem)
+            font-bold : 太字
+            mb-1      : 下に4pxの余白
+          */}
+          <h2 className="text-xl font-bold mb-1">{product.name}</h2>
+
+          {/*
+            [商品価格]
+            text-gray-700 : 文字色を少し薄いグレーに
+            {product.price}円 : 価格を表示し、日本円の単位を付ける
+          */}
+          <p className="text-gray-700">{product.price}円</p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      ))}
     </div>
   );
 }
