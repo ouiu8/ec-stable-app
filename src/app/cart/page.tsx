@@ -13,7 +13,7 @@ CartContext からカートの状態（追加された商品一覧）を取得�
 
 "use client"; // このページはクライアントコンポーネントとして扱います
 
-import { useCart } from '../../context/CartContext'; 
+import { useCart } from '../../context/cart';
 // 上記は、以前作成した CartContext からカート状態と操作関数を取得するためのフック
 
 export default function CartPage() {

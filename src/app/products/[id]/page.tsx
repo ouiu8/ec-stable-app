@@ -16,7 +16,7 @@ URL から商品IDを取得し、モックデータを使って該当商品の�
 Next.js の useParams フックを使って、URL の動的パラメータ (ここでは "id") を取得します。
 */
 import { useParams } from 'next/navigation';
-import { useCart } from '../../../context/CartContext'; // カートコンテキストをインポート
+import { useCart } from '../../../context/cart'; // カートコンテキストをインポート
 
 
 /* 

@@ -1,6 +1,6 @@
 "use client";
 
-import { CartProvider } from '../context/CartContext';
+import { CartProvider } from '../context/cart';
 import { ReactNode } from 'react';
 
 type ClientCartProviderProps = {
